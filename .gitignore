@@ -1,3 +1,5 @@
 .DS_Store
 venv/
 django-env/
+dev.env
+prod.env
