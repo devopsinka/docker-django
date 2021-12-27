@@ -2,26 +2,32 @@ version: '3.9'
 services:
   nginx:
     container_name: prom_web
+    build: ./nginx/prod
     restart: on-failure
     image: nginx:1.19.8
     volumes:
       - ./nginx/prod/nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/app/static
+      - media_volume:/home/app/web/mediafiles
     ports:
-      - 80:80
+      - 1337:80
     depends_on:
       - web
   web:
-    container_name: prom_backend
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     restart: always
-    env_file: dev.env
-    command: sh -c "gunicorn --bind 0.0.0.0:5000 djangotgprojects.wsgi"
+    env_file: prom.env
+    command: sh -c "gunicorn --bind 0.0.0.0:8000 djangotgprojects.wsgi"
+    expose:
+      - 8000
     volumes:
-     - .:/app
-     - static_volume:/app/static
+      - .:/app
+      - static_volume:/app/static
+      - media_volume:/home/app/web/mediafiles
     depends_on:
-     - db
+      - db
   db:
     container_name: dev_db
     image: postgres:12.0-alpine
@@ -30,5 +36,6 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
 volumes:
-  static_volume:
   postgres_data:
+  static_volume:
+  media_volume:
