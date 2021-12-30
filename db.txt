@@ -1,0 +1,17 @@
+Скопировать и создать dev.env, поменять SECRET_KEY
+
+DEBUG=1
+SECRET_KEY=''
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+
+
+POSTGRES_USER="hello_django"
+POSTGRES_PASSWORD="hello_django"
+POSTGRES_DB="hello_django_dev"
+DB_NAME="hello_django_dev"
+DB_USERNAME="hello_django"
+DB_PASSWORD="hello_django"
+DB_HOST="db"
+DB_PORT="5432"
+DJANGO_SETTINGS_MODULE="djangotgprojects.settings"
+DATABASE=postgres
